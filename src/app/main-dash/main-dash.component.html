@@ -1,0 +1,30 @@
+<div class="grid-container">
+  <h1 class="mat-h1">Dashboard</h1>
+  <mat-grid-list cols="2" rowHeight="650px">
+    <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">
+      <mat-card class="dashboard-card">
+        <mat-card-header>
+          <mat-card-title>
+            {{card.title}}
+            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" xPosition="before">
+              <button mat-menu-item>Expand</button>
+              <button mat-menu-item>Remove</button>
+            </mat-menu>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content" *ngIf="card.id === 'brg'">
+          <div *ngFor="let b of burgers"><h2>{{b.title}}</h2><br /><span>{{b.description}}</span><br /><h4>{{b.price | currency: 'EUR'}}</h4></div>
+        </mat-card-content>
+        <mat-card-content class="dashboard-card-content" *ngIf="card.id === 'glt'">
+          <div *ngFor="let g of galettes"><h2>{{g.title}}</h2><br /><span>{{g.description}}</span><br /><h4>{{g.price | currency: 'EUR'}}</h4></div>
+        </mat-card-content>
+        <mat-card-content class="dashboard-card-content" *ngIf="card.id === 'pzz'">
+          <div *ngFor="let p of pizzas"><h2>{{p.title}}</h2><br /><span>{{p.description}}</span><br /><h4>{{p.price | currency: 'EUR'}}</h4></div>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
