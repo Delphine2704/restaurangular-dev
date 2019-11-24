@@ -1,29 +1,36 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { debounceTime, map, tap } from 'rxjs/operators';
+import { debounceTime, map, tap, switchMap } from 'rxjs/operators';
+
+import { ScheduleService } from '../services/schedule.service';
+import { EveningEvent } from '../models/evening-event.interface';
 
 @Component({
   selector: 'app-schedule',
   templateUrl: './schedule.component.html',
   styleUrls: ['./schedule.component.scss']
 })
+
 export class ScheduleComponent implements OnInit {
   searchTerm = new FormControl();
   searchTerms$: Observable<string> = this.searchTerm.valueChanges;
+  result: EveningEvent[] = [];
 
-  constructor() { }
+  constructor(private scheduleService: ScheduleService) { }
 
   ngOnInit() {
     this.searchTerms$
       .pipe(
-        tap(x => console.log('avant map', x)),
-        map(x => x.toUpperCase()),
-        map(uppercased => this.reverse(uppercased)),
-        tap(x => console.log('après map', x)),
-        debounceTime(3000)
+        // tap(x => console.log('avant map', x)),
+        // map(x => x.toUpperCase()),
+        // map(uppercased => this.reverse(uppercased)),
+        // tap(x => console.log('après map', x)),
+        debounceTime(1000),
+        switchMap(word => this.scheduleService.search(word)),
+        tap(x => console.log(x))
       )
-      .subscribe(data => console.log(data));
+      .subscribe(data => this.result = data);
   }
 
   reverse(word) {
