@@ -42,6 +42,7 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'carte', component: CarteComponent },
   { path: 'reserve', component: ReserveComponent },
+  { path: 'schedule', component: ScheduleComponent },
   { path: 'contact', component: ContactComponent }
 ];
 
