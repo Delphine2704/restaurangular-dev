@@ -1,59 +1,55 @@
-<br><br>
-<div>
-{{reservationForm.value | json }}
+<div class="container">
+        <div class="row">
+            <div class="lg-12" style="margin:20px;">
+    
+            <div *ngIf="!isCheduleOk">
+                <form [formGroup]="reservationForm" (submit)="saveReservation()">
+                    <mat-form-field>
+                        <input matInput [matDatepicker]="picker" placeholder="Choisir une date" formControlName="date">
+                        <mat-datepicker-toggle matSuffix [for]="picker">
+                            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker [startAt]="date"></mat-datepicker>
+                    </mat-form-field>
+                        
+                    <mat-form-field>
+                        <mat-label>Heure de réservation</mat-label>
+                        <select matNativeControl required formControlName="time">
+                            <option *ngFor="let t of timeOptions" [value]="t">{{t}}</option>
+                        </select>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Nombre de personnes</mat-label>
+                        <select matNativeControl required formControlName="people">
+                            <option *ngFor="let p of peopleOptions" [value]="p">{{p}}</option>
+                        </select>
+                    </mat-form-field>
+
+                    <button mat-button type="submit">Confirmer l'horaire</button>
+                </form>
+            </div>
+
+            <br><br>
+
+            <div *ngIf="isCheduleOk">
+                <form #f="ngForm" (submit)="finalizeReservation(f)">
+                    <mat-form-field>
+                        <input matInput type="text" name="firstName" [(ngModel)]="client.firstName" placeholder="Prénom">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput type="text" name="lastName" [(ngModel)]="client.lastName" placeholder="Nom">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput type="text" name="mail" [(ngModel)]="client.mail" placeholder="Email">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput type="text" name="phone" [(ngModel)]="client.phone" placeholder="Téléphone">
+                    </mat-form-field>
+                    <button mat-button type="submit">réserver</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
 </div>
-<br><br>
-<div *ngIf="!isCheduleOk">
-    <form [formGroup]="reservationForm" (submit)="saveReservation()">
-        <mat-form-field>
-            <input matInput [matDatepicker]="picker" placeholder="Choisir une date" formControlName="date">
-            <mat-datepicker-toggle matSuffix [for]="picker">
-                <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-            </mat-datepicker-toggle>
-            <mat-datepicker #picker [startAt]="date"></mat-datepicker>
-        </mat-form-field>
-            
-        <mat-form-field>
-            <mat-label>Heure de réservation</mat-label>
-            <select matNativeControl required formControlName="time">
-                <option *ngFor="let t of timeOptions" [value]="t">{{t}}</option>
-            </select>
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>Nombre de personnes</mat-label>
-            <select matNativeControl required formControlName="people">
-                <option *ngFor="let p of peopleOptions" [value]="p">{{p}}</option>
-            </select>
-        </mat-form-field>
-
-        <button mat-button type="submit">Confirmer l'horaire</button>
-    </form>
-</div>
-
-<br><br>
-
-<div *ngIf="isCheduleOk">
-    <form #f="ngForm" (submit)="finalizeReservation(f)">
-        <mat-form-field>
-            <input matInput type="text" name="firstName" [(ngModel)]="client.firstName" placeholder="Prénom">
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput type="text" name="lastName" [(ngModel)]="client.lastName" placeholder="Nom">
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput type="text" name="mail" [(ngModel)]="client.mail" placeholder="Email">
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput type="text" name="phone" [(ngModel)]="client.phone" placeholder="Téléphone">
-        </mat-form-field>
-        <button mat-button type="submit">réserver</button>
-    </form>
-</div>
-
-<br><br>
-
-{{ f.controls.firstName?.value }}
-{{ f.controls.lastName?.value }}
-{{ f.controls.mail?.value }}
-{{ f.controls.phone?.value }}

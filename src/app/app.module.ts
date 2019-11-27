@@ -38,6 +38,7 @@ import {
 
 import { QuickLunchService } from './services/quick-lunch.service';
 import { ScheduleComponent } from './schedule/schedule.component';
+import { PhoneComponent } from './phone/phone.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -57,7 +58,8 @@ const routes: Routes = [
     ContactComponent,
     MainDashComponent,
     DishTableComponent,
-    ScheduleComponent
+    ScheduleComponent,
+    PhoneComponent
   ],
   imports: [
     BrowserModule,
